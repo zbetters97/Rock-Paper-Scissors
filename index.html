@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script defer type="text/javascript" src="scripts/script.js"></script>
+    <title>Rock Paper Scissors</title>
+  </head>
+
+  <body>
+    <div class="name-field">
+      <input id="input-name" placeholder="Your name..." />
+      <button class="name-btn" onclick="changeName();">Change Name</button>
+    </div>
+
+    <h4 class="title">Rock Paper Scissors</h4>
+    <div>
+      <button class="move-btn" onclick="playGame('rock');">
+        <i class="fa-solid fa-hand-fist move-icon"></i>
+      </button>
+      <button class="move-btn" onclick="playGame('paper');">
+        <i class="fa-solid fa-hand move-icon"></i>
+      </button>
+      <button class="move-btn" onclick="playGame('scissors');">
+        <i class="fa-solid fa-hand-scissors move-icon"></i>
+      </button>
+    </div>
+
+    <div class="results">
+      <p id="name">You: <span id="player"></span></p>
+      <p>CPU: <span id="cpu"></span></p>
+      <p>Result: <span id="result"></span></p>
+    </div>
+
+    <div class="scores">
+      <h4>SCORES</h4>
+      <p>Wins: <span id="wins">0</span></p>
+      <p>Losses: <span id="losses">0</span></p>
+      <p>Ties: <span id="ties">0</span></p>
+      <button class="reset-btn" onclick="resetScore();">Reset Score</button>
+    </div>
+  </body>
+  <script></script>
+</html>
