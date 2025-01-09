@@ -1,6 +1,20 @@
-$(document).ready(function () {
+$(document).ready(() => {
   updateBoard();
   document.getElementById("name").firstChild.nodeValue = `${playerName}: `;
+
+  document.body.addEventListener("keydown", (e) => {
+    if (e.key === "r") playGame("rock");
+    else if (e.key === "p") playGame("paper");
+    else if (e.key === "s") playGame("scissors");
+  });
+
+  document
+    .querySelector(".rock-btn")
+    .addEventListener("click", () => playGame("rock"));
+  document
+    .querySelector(".paper-btn")
+    .addEventListener("click", () => playGame("paper"));
+  $(".scissors-btn").on("click", () => playGame("scissors"));
 });
 
 let playerName = localStorage.getItem("name") || "You";
@@ -14,6 +28,13 @@ scores.reset = function () {
   this.losses = 0;
   this.ties = 0;
 };
+
+const rock = '<i class="fa-solid fa-hand-fist"></i>';
+const paper = '<i class="fa-solid fa-hand"></i>';
+const scissors = '<i class="fa-solid fa-hand-scissors"></i>';
+
+let isAutoPlaying = false;
+let autoGame = null;
 
 function changeName() {
   const inputField = document.querySelector("#input-name");
@@ -37,18 +58,22 @@ function playGame(playerMove) {
   const computerMove = getCPUMove();
   let result = "";
 
-  if (computerMove === "rock") {
-    if (playerMove === "rock") result = "TIE";
-    else if (playerMove === "paper") result = "WIN";
-    else if (playerMove === "scissors") result = "LOSS";
-  } else if (computerMove === "paper") {
-    if (playerMove === "rock") result = "LOSS";
-    else if (playerMove === "paper") result = "TIE";
-    else if (playerMove === "scissors") result = "WIN";
-  } else if (computerMove === "scissors") {
-    if (playerMove === "rock") result = "WIN";
-    else if (playerMove === "paper") result = "LOSS";
-    else if (playerMove === "scissors") result = "TIE";
+  switch (computerMove) {
+    case "rock":
+      if (playerMove === "rock") result = "TIE";
+      else if (playerMove === "paper") result = "WIN";
+      else if (playerMove === "scissors") result = "LOSS";
+      break;
+    case "paper":
+      if (playerMove === "rock") result = "LOSS";
+      else if (playerMove === "paper") result = "TIE";
+      else if (playerMove === "scissors") result = "WIN";
+      break;
+    case "scissors":
+      if (playerMove === "rock") result = "WIN";
+      else if (playerMove === "paper") result = "LOSS";
+      else if (playerMove === "scissors") result = "TIE";
+      break;
   }
 
   getResult(playerMove, computerMove, result);
@@ -79,17 +104,56 @@ function getResult(playerMove, computerMove, result) {
   updateBoard();
   localStorage.setItem("scores", JSON.stringify(scores));
 
-  document.getElementById("player").innerHTML = `${playerMove.toUpperCase()}`;
-  document.getElementById("cpu").innerHTML = `${computerMove.toUpperCase()}`;
-  document.getElementById("result").innerHTML = `${result.toUpperCase()}`;
+  playerMove = getHandIcon(playerMove);
+  computerMove = getHandIcon(computerMove);
+
+  document.getElementById("player").innerHTML = `${playerMove}`;
+  document.getElementById("cpu").innerHTML = `${computerMove}`;
+  document.getElementById("result").innerHTML = `${result}`;
+}
+
+function getHandIcon(move) {
+  switch (move) {
+    case "rock":
+      move = rock;
+      break;
+    case "paper":
+      move = paper;
+      break;
+    case "scissors":
+      move = scissors;
+      break;
+  }
+
+  return move;
 }
 
 function resetScore() {
   document.getElementById("player").innerHTML = "";
   document.getElementById("cpu").innerHTML = "";
   document.getElementById("result").innerHTML = "";
+  document.querySelector(".auto-btn").innerHTML = "Auto Play";
 
   scores.reset();
   updateBoard();
+  clearInterval(autoGame);
+  isAutoPlaying = false;
+
   localStorage.removeItem("scores");
+}
+
+function autoPlay() {
+  const autoBtn = document.querySelector(".auto-btn");
+
+  if (!isAutoPlaying) {
+    autoGame = setInterval(() => {
+      playGame(getCPUMove());
+    }, 1000);
+    autoBtn.innerHTML = "Stop";
+    isAutoPlaying = true;
+  } else {
+    clearInterval(autoGame);
+    autoBtn.innerHTML = "Auto Play";
+    isAutoPlaying = false;
+  }
 }

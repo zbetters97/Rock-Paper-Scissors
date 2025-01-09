@@ -24,20 +24,20 @@
 
     <h4 class="title">Rock Paper Scissors</h4>
     <div>
-      <button class="move-btn" onclick="playGame('rock');">
+      <button class="move-btn rock-btn">
         <i class="fa-solid fa-hand-fist move-icon"></i>
       </button>
-      <button class="move-btn" onclick="playGame('paper');">
+      <button class="move-btn paper-btn">
         <i class="fa-solid fa-hand move-icon"></i>
       </button>
-      <button class="move-btn" onclick="playGame('scissors');">
+      <button class="move-btn scissors-btn">
         <i class="fa-solid fa-hand-scissors move-icon"></i>
       </button>
     </div>
 
     <div class="results">
-      <p id="name">You: <span id="player"></span></p>
-      <p>CPU: <span id="cpu"></span></p>
+      <p id="name">You: <i id="player"></i></p>
+      <p>CPU: <i id="cpu"></i></p>
       <p>Result: <span id="result"></span></p>
     </div>
 
@@ -47,6 +47,7 @@
       <p>Losses: <span id="losses">0</span></p>
       <p>Ties: <span id="ties">0</span></p>
       <button class="reset-btn" onclick="resetScore();">Reset Score</button>
+      <button class="auto-btn" onclick="autoPlay();">Auto Play</button>
     </div>
   </body>
   <script></script>
